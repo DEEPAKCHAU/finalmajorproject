@@ -1,0 +1,25 @@
+CREATE TABLE Project(ProjectId int NOT NULL AUTO_INCREMENT, ProjectName varchar(255), Description varchar(255),PRIMARY KEY (ProjectId));
+
+
+//Creating TestPlan Table
+CREATE TABLE TestPlan(TestPlanId int NOT NULL AUTO_INCREMENT, PlanTitle varchar(255) NOT NULL, Description varchar(255), ProjectId int NOT NULL,Status varchar(255) DEFAULT 'Created', Type varchar(255), PRIMARY KEY (TestPlanId),FOREIGN KEY (ProjectId) REFERENCES Project(ProjectId))
+
+//Inserting records in TestPlan
+insert into TestPlan (Plantitle,Description,Type)values('Plan1','test','Performance');
+insert into TestPlan (Plantitle,Description,Type)values('Plan2','tes2','Regression');
+
+
+//Creating TestCase Table
+CREATE TABLE TestCase(TestCaseId int NOT NULL AUTO_INCREMENT, CaseTitle varchar(255) NOT NULL, Description varchar(255), Datasetexpected varchar(255), TestPlanId int, PRIMARY KEY (TestCaseId), FOREIGN KEY (TestPlanId) REFERENCES TestPlan(TestPlanId));
+
+//Creating TestScript Table
+CREATE TABLE TestScript(TestScriptId int NOT NULL AUTO_INCREMENT, ScriptTitle varchar(255), Description varchar(255), ExecutionInstruction varchar(255), Dataset varchar(255), TestCaseId int, PRIMARY KEY (TestScriptId), FOREIGN KEY (TestCaseId) REFERENCES TestCase(TestCaseId));
+
+
+//Creating User table
+create table User(username varchar (255) NOT NULL,password varchar(255) NOT NULL,type varchar(255) NOT NULL,PRIMARY KEY(username));
+
+
+//Creating TestExecution table
+CREATE TABLE TestExecution(TestExecutionId int NOT NULL AUTO_INCREMENT, RunsON varchar(255), Result varchar(255), Status varchar(255), TestCaseId int, PRIMARY KEY (TestExecutionId), FOREIGN KEY (TestCaseId) REFERENCES TestCase(TestCaseId));
+
